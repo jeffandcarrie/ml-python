@@ -17,6 +17,7 @@ jupyter:
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from IPython.display import clear_output
 #test ick
 ```
 
@@ -25,60 +26,8 @@ data = pd.read_csv('ex1data1.txt', header = None) #read from dataset
 X = data[0] # read first column
 y = data[1] # read second column
 m = len(y) # number of training example
+ones = np.ones((m, 1))
 data.head() # view first few rows of the data
-```
-
-```{python}
-plt.scatter(X, y)
-plt.xlabel('Population of City in 10,000s')
-plt.ylabel('Profit in $10,000s')
-plt.show()
-```
-
-```{python}
-X = X[:,np.newaxis]
-y = y[:,np.newaxis]
-print(X)
-theta = np.zeros([2,1])
-iterations = 1500
-alpha = 0.01
-ones = np.ones((m,1))
-X = np.hstack((ones, X)) # adding the intercept term
-```
-
-```{python}
-def computeCost(X, y, theta):
-    temp = np.dot(X, theta) - y
-    return np.sum(np.power(temp, 2)) / (2*m)
-J = computeCost(X, y, theta)
-print(J)
-```
-
-```{python}
-def gradientDescent(X, y, theta, alpha, iterations):
-    for _ in range(iterations):
-        temp = np.dot(X, theta) - y
-        temp = np.dot(X.T, temp)
-        theta = theta - (alpha/m) * temp
-    return theta
-theta = gradientDescent(X, y, theta, alpha, iterations)
-print(theta)
-```
-
-```{python}
-plt.scatter(X[:,1], y)
-plt.xlabel('Population of City in 10,000s')
-plt.ylabel('Profit in $10,000s')
-plt.plot(X[:,1], np.dot(X, theta))
-plt.show()
-```
-
-```{python}
-data[0]
-```
-
-```{python}
-np.newaxis
 ```
 
 ```{python}
@@ -123,12 +72,13 @@ def gradient_descent(X,y,theta,learning_rate=0.01,iterations=100):
         theta_history[it,:] =theta.T
         cost_history[it]  = cal_cost(theta,X,y)
         
+
     return theta, cost_history, theta_history
 ```
 
 ```{python}
 lr =0.01
-n_iter = 10000
+n_iter = 100000
 
 #X = 2 * np.random.rand(100,1)
 #y = 4 +3 * X+np.random.randn(100,1)
@@ -151,9 +101,17 @@ fig,ax = plt.subplots(figsize=(10,8))
 
 ax.set_ylabel('{J(Theta)}',rotation=0)
 ax.set_xlabel('{Iterations}')
-theta = np.random.randn(2,1)
+#theta = np.random.randn(2,1)
 
 _=ax.plot(range(n_iter),cost_history,'b.')
+```
+
+```{python}
+plt.scatter(X[:,0], y)
+plt.xlabel('Population of City in 10,000s')
+plt.ylabel('Profit in $10,000s')
+plt.plot(X[:,0], np.hstack( (ones, X)).dot(theta))
+plt.show()
 ```
 
 ```{python}
