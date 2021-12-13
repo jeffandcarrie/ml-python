@@ -1,6 +1,7 @@
 ---
 jupyter:
   jupytext:
+    formats: Rmd,ipynb
     text_representation:
       extension: .Rmd
       format_name: rmarkdown
@@ -16,8 +17,7 @@ jupyter:
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-
-
+#test ick
 ```
 
 ```{python}
